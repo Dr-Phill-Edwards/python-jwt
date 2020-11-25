@@ -22,7 +22,7 @@ class JWKS:
 
     def __str__(self):
         result = 'JWKS\n'
-        for key in self.keys:
+        for key in self.keys.values():
             result = result + '\t' + str(key) + '\n'
         return result
     
