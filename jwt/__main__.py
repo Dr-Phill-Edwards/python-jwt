@@ -1,6 +1,7 @@
 from jwt.jwks import JWKS
 from jwt.jwt import JWT
 import os
+import traceback
 
 try:
     jwks = JWKS('https://' + os.environ['OKTA_DOMAIN'] + '/oauth2/default/v1/keys')

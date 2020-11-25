@@ -13,11 +13,11 @@ class JWT:
         self.iss = claims['iss']
         self.aud = claims['aud']
         self.iat = claims['iat']
-        self.signature = parts[2]
+        self.signature = base64.urlsafe_b64decode(parts[2] + '===')
 
     def __str__(self):
         iat = datetime.fromtimestamp(self.iat).isoformat()
         return 'kid={self.kid} alg={self.alg} iss={self.iss} aud={self.aud} iat={iat}'.format(self=self, iat=iat)
 
     def decode64(self, b64):
-        return json.loads(base64.b64decode(b64 + '==='))
+        return json.loads(base64.urlsafe_b64decode(b64 + '==='))
