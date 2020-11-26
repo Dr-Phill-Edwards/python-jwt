@@ -2,14 +2,18 @@ import os
 from flask import Flask, request
 from jwt.jwks import JWKS
 
-jwks = JWKS('https://' + os.environ['OKTA_DOMAIN'] + '/oauth2/default/v1/keys')
+jwks = JWKS(os.environ['OKTA_ISSUER_URI'] + '/v1/keys')
 print(str(jwks))
 
 app = Flask(__name__, static_url_path='', static_folder='client')
 
-@app.route('/<path:path>', methods=['GET'])
-def serve_static(path):
-    return app.send_static_file(path)
+@app.route('/', methods=['GET'])
+def index():
+    return app.send_static_file('index.html')
+
+@app.route('/<path:file>', methods=['GET'])
+def serve_static(file):
+    return app.send_static_file(file)
 
 @app.route('/api/messages', methods=['POST'])
 def messages():
