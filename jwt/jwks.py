@@ -18,5 +18,7 @@ class JWKS:
         return result
     
     def verify(self, jwt):
-        return self.keys[jwt.kid].verify(jwt)
+        if jwt.kid not in self.keys:
+            raise Exception('Invalid kid')
+        self.keys[jwt.kid].verify(jwt)
 

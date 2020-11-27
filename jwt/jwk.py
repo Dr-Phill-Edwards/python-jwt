@@ -16,7 +16,6 @@ class JWK:
         return 'kid={self.kid} alg={self.alg} e={self.e} n={self.n}'.format(self=self)
     
     def verify(self, jwt):
-        now = datetime.now()
         hash = SHA256.new(str.encode(jwt.payload))
         pkcs1_15.new(self.publicKey).verify(hash, jwt.signature)
         
